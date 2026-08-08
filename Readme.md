@@ -95,6 +95,10 @@ geometry_msgs/Point current_pose # 현재 연산 중인 위치
 
 트러블 슈팅
 - 인터페이스는 파스칼로 설정해야 하는데 정작 참조할때에는 스네이크형식이네? 실제 내용은 인터페이스의 install폴더 내부 action에서 확인 가능
+- 액션 서버(인터페이스 상속한 클래스)는 handle_goal, handle_cancel, handle_accepted를 구현하고 (함수든, 람다든) rclcpp_action::create_server<PathPlanner> 형태로 서버 등록필요
+- 컴포넌트 구조로 만들면 main이 필요없는데 간단하게 만들땐 main이 필요함
+- 실제 gis로직을 넣어볼까 했는데 좀 복잡해짐 그냥 넘어갈까 고민중
+
 
 ### Step 3: 컴포넌트화 및 성능 최적화 (Components & Launch)
 

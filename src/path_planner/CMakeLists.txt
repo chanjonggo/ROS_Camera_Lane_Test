@@ -12,6 +12,21 @@ find_package(rclcpp_action REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(custom_action_interfaces REQUIRED)
 
+add_executable(path_planner_server
+  src/path_planner_server.cpp
+)
+
+target_link_libraries(path_planner_server PUBLIC
+  rclcpp::rclcpp
+  rclcpp_action::rclcpp_action
+  custom_action_interfaces::custom_action_interfaces
+)
+
+install(TARGETS
+  path_planner_server
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
