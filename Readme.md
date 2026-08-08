@@ -75,12 +75,26 @@ geometry_msgs/Point current_pose # 현재 연산 중인 위치
 * `path_planner.action` 작성 및 CMakeLists.txt / package.xml 빌드 설정 구성
 * `colcon build`를 통한 C++ 헤더 파일 자동 생성 검증
 
+트러블 슈팅
+- action의 경우 파스칼 형태의 명명규칙을 따라야 함 (PathPlanner)
+- 의존성의 경우 내가 기억하고 추가해야함, rosdep 는 내가 선언한 의존성이 시스템에 있는지 체크하는 용도
+- 누락한 의존성은 빌드시 발생하는 문제로 확인해야 함
+- 의존성의 추가는 보통 package와 cmakelist 두군데서 들어감, action에 의존성이 있을땐 cmakelist에서도 추가 필요
+- geometry_msgs추가 시 find_package(geometry_msgs REQUIRED), <depend>geometry_msgs</depend> 필요
+- 인터페이스는 기본적으로 rosidl_generate_interfaces(${PROJECT_NAME}
+  "action/PathPlanner.action"
+  DEPENDENCIES geometry_msgs
+) 와 <member_of_group>rosidl_interface_packages</member_of_group> 추가 필요
+
 ### Step 2: 코어 비즈니스 로직 구현 (Action Server)
 
 * `rclcpp_node` 상속 구조 및 `NodeOptions` 적용
 * `execute` 함수 내 경로 탐색 시뮬레이션 루프 구현
 * `is_canceling()`을 통한 예외 처리 및 취소 로직 구현
 * `goal_handle->publish_feedback()` 및 `succeed()` / `canceled()` 처리
+
+트러블 슈팅
+- 인터페이스는 파스칼로 설정해야 하는데 정작 참조할때에는 스네이크형식이네? 실제 내용은 인터페이스의 install폴더 내부 action에서 확인 가능
 
 ### Step 3: 컴포넌트화 및 성능 최적화 (Components & Launch)
 

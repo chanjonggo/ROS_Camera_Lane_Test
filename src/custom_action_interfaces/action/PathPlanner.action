@@ -1,0 +1,17 @@
+# Goal
+float64[] start_pos
+float64[] target_pos
+
+---
+
+# Result
+bool success
+float32 total_time
+geometry_msgs/Point[] final_path
+
+---
+
+# Feedback
+int32 current_step
+float32 distance_remaining
+geometry_msgs/Point current_pose
